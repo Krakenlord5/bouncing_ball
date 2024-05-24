@@ -38,10 +38,18 @@ class Ball(pygame.sprite.Sprite):
             self.boing.play()
             self.weight += 40
             self.direction = self.direction_start - self.weight
+            if -30 <= self.direction < 0:
+                self.direction = 0
+                self.weight = 0
+                self.rect.left = 0
         if self.rect.right > S_WIDTH and self.direction > 0:
             self.boing.play()
             self.weight += 40
             self.direction = -(self.direction_start) + self.weight
+            if 0 < self.direction <= 30:
+                self.direction = 0
+                self.weight = 0
+                self.rect.right = S_WIDTH
 
     def bounce(self, dt):
         if self.do_bounce:
