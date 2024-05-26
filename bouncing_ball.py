@@ -18,12 +18,9 @@ class Ball(pygame.sprite.Sprite):
         self.direction = self.direction_start = 600
         self.do_bounce = True
         self.pos = pygame.math.Vector2(self.rect.topleft)
-        self.boing = pygame.mixer.Sound("C:\\Users\MSI\\Documents\\- Python codes\\audio\\boing2.wav")
-        self.boing.set_volume(0.2)
 
     def check_collision(self):
         if self.rect.bottom > S_HEIGHT and self.gravity > 0:
-            self.boing.play()
             self.weight += 30
             self.gravity = self.gravity_start + self.weight
             if -30 <= self.gravity <= 0 or self.gravity > 0: 
@@ -31,11 +28,9 @@ class Ball(pygame.sprite.Sprite):
                 self.speed = 0
                 self.rect.bottom = S_HEIGHT
         if self.rect.top < 0 and self.gravity <= 0:
-            self.boing.play()
             self.gravity = 200
             self.gravity_start = -600
         if self.rect.left < 0 and self.direction < 0: 
-            self.boing.play()
             self.weight += 40
             self.direction = self.direction_start - self.weight
             if -30 <= self.direction < 0:
@@ -43,9 +38,8 @@ class Ball(pygame.sprite.Sprite):
                 self.weight = 0
                 self.rect.left = 0
         if self.rect.right > S_WIDTH and self.direction > 0:
-            self.boing.play()
             self.weight += 40
-            self.direction = -(self.direction_start) + self.weight
+            self.direction = self.weight - self.direction_start
             if 0 < self.direction <= 30:
                 self.direction = 0
                 self.weight = 0
@@ -121,9 +115,6 @@ if __name__ == "__main__":
         screen.fill("black")
         ball.draw(screen)
         ball.update(dt, dx, dy)
-        debug(FPS)
-        debug(dy, 40)
-        debug(dx, 70)
 
         pygame.display.update()
         clock.tick(FPS)
